@@ -3389,6 +3389,14 @@ mx6solo_sabreauto_mfg_config      \
 mx6q_sabreauto_config    : unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 mx6q_sabreauto freescale mx6
 
+mx6q_ar6mx_config         \
+mx6q_ar6mx_mfg_config         \
+mx6q_ar6mx_android_config \
+mx6solo_ar6mx_config         \
+mx6solo_ar6mx_mfg_config         \
+mx6solo_ar6mx_android_config    : unconfig 
+	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 mx6q_ar6mx freescale mx6
+
 mx6sl_arm2_config		\
 mx6sl_arm2_android_config		\
 mx6sl_arm2_mfg_config	\
