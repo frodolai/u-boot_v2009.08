@@ -595,7 +595,18 @@ void spi_io_init(struct imx_spi_dev_t *dev)
 		reg = readl(CCM_BASE_ADDR + CLKCTL_CCGR1);
 		reg |= 0x30;
 		writel(reg, CCM_BASE_ADDR + CLKCTL_CCGR1);
+#if defined CONFIG_MX6Q
 		/* SCLK */
+		mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT0__ECSPI3_SCLK);
+
+		/* MISO */
+		mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT2__ECSPI3_MISO);
+
+		/* MOSI */
+		mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT1__ECSPI3_MOSI);
+
+		mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT3__ECSPI3_SS0);
+#elif defined CONFIG_MX6DL
 		mxc_iomux_v3_setup_pad(MX6DL_PAD_DISP0_DAT0__ECSPI3_SCLK);
 
 		/* MISO */
@@ -606,7 +617,7 @@ void spi_io_init(struct imx_spi_dev_t *dev)
 
    		/* CS */
 		mxc_iomux_v3_setup_pad(MX6DL_PAD_DISP0_DAT3__ECSPI3_SS0);
-  		//oliver}+
+#endif
 		break;
 	default:
 		break;
@@ -1247,21 +1258,27 @@ int mx6_rgmii_rework(char *devname, int phy_addr)
 
 #if defined CONFIG_MX6Q
 iomux_v3_cfg_t enet_pads[] = {
-	MX6Q_PAD_KEY_COL1__ENET_MDIO,
-	MX6Q_PAD_KEY_COL2__ENET_MDC,
+	MX6Q_PAD_ENET_MDIO__ENET_MDIO,
+	MX6Q_PAD_ENET_MDC__ENET_MDC,
+	MX6Q_PAD_ENET_REF_CLK__ENET_TX_CLK,
 	MX6Q_PAD_RGMII_TXC__ENET_RGMII_TXC,
 	MX6Q_PAD_RGMII_TD0__ENET_RGMII_TD0,
 	MX6Q_PAD_RGMII_TD1__ENET_RGMII_TD1,
 	MX6Q_PAD_RGMII_TD2__ENET_RGMII_TD2,
 	MX6Q_PAD_RGMII_TD3__ENET_RGMII_TD3,
 	MX6Q_PAD_RGMII_TX_CTL__ENET_RGMII_TX_CTL,
-	MX6Q_PAD_ENET_REF_CLK__ENET_TX_CLK,
 	MX6Q_PAD_RGMII_RXC__ENET_RGMII_RXC,
 	MX6Q_PAD_RGMII_RD0__ENET_RGMII_RD0,
 	MX6Q_PAD_RGMII_RD1__ENET_RGMII_RD1,
 	MX6Q_PAD_RGMII_RD2__ENET_RGMII_RD2,
 	MX6Q_PAD_RGMII_RD3__ENET_RGMII_RD3,
-	MX6Q_PAD_RGMII_RX_CTL__ENET_RGMII_RX_CTL,
+	/* pin 33 - 1 - (CLK125_EN) 125Mhz clockout enabled */
+	MX6Q_PAD_RGMII_RX_CTL__GPIO_6_24,
+	#if 1
+	/* CCM  */
+	MX6Q_PAD_CSI0_MCLK__CCM_CLKO,
+	MX6Q_PAD_NANDF_CS2__CCM_CLKO2,
+	#endif
 };
 #elif defined CONFIG_MX6DL
 #if 0 //+oliver
@@ -1311,24 +1328,53 @@ iomux_v3_cfg_t enet_pads[] = {
 
 void enet_board_init(void)
 {
-#if 0 //+oliver
+	unsigned int reg;
+#if defined CONFIG_MX6Q
+	iomux_v3_cfg_t enet_reset =
+			(_MX6Q_PAD_ENET_CRS_DV__GPIO_1_25 &
+			~MUX_PAD_CTRL_MASK)           |
+			 MUX_PAD_CTRL(0x88);
+#elif defined CONFIG_MX6DL
+	iomux_v3_cfg_t enet_reset =
+			(MX6DL_PAD_ENET_CRS_DV__GPIO_1_25 &
+			~MUX_PAD_CTRL_MASK)           |
+			 MUX_PAD_CTRL(0x88);
+#endif
+
 	mxc_iomux_v3_setup_multiple_pads(enet_pads,
 			ARRAY_SIZE(enet_pads));
-#endif  //+oliver
-	mxc_iomux_v3_setup_multiple_pads(enet_pads,
-			ARRAY_SIZE(enet_pads));
-	mxc_iomux_v3_setup_pad(MX6DL_PAD_ENET_CRS_DV__GPIO_1_25);
+	mxc_iomux_v3_setup_pad(enet_reset);
 
 	/* phy reset: gpio1-25 */
-	gpio_direction_output(ENET_RST, 0);
+	reg = readl(GPIO1_BASE_ADDR + GPIO_GDIR);
+	reg |= (1 << 25);
+	writel(reg, GPIO1_BASE_ADDR + GPIO_GDIR);
+	reg = readl(GPIO1_BASE_ADDR + GPIO_DR);
+	reg &= ~(1 << 25);
+	writel(reg, GPIO1_BASE_ADDR + GPIO_DR);
 
-  	/* Straping CLK125_EN */
-	gpio_direction_output(CLK125_EN, 1);
+	/* Straping CLK125_EN */
+	reg = readl(GPIO6_BASE_ADDR + GPIO_GDIR);
+	reg |= (1 << 24);
+	writel(reg, GPIO6_BASE_ADDR + GPIO_GDIR);
+	reg = readl(GPIO6_BASE_ADDR + GPIO_DR);
+	reg |= (1 << 24);
+	writel(reg, GPIO6_BASE_ADDR + GPIO_DR);
 
 	udelay(50000);
 
-	gpio_direction_output(ENET_RST, 1);
+	reg = readl(GPIO1_BASE_ADDR + GPIO_GDIR);
+	reg |= (1 << 25);
+	writel(reg, GPIO1_BASE_ADDR + GPIO_GDIR);
+	reg = readl(GPIO1_BASE_ADDR + GPIO_DR);
+	reg |= (1 << 25);
+	writel(reg, GPIO1_BASE_ADDR + GPIO_DR);
+
+#if defined CONFIG_MX6Q
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_RGMII_RX_CTL__ENET_RGMII_RX_CTL);
+#elif defined CONFIG_MX6DL
 	mxc_iomux_v3_setup_pad(MX6DL_PAD_RGMII_RX_CTL__ENET_RGMII_RX_CTL);
+#endif
 }
 
 int checkboard(void)
