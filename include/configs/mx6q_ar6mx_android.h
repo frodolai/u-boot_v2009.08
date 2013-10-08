@@ -83,7 +83,7 @@
 			"video=mxcfb1:off video=mxcfb2:off vmalloc=400M "	\
 			"androidboot.console=ttymxc0 androidboot.hardware=freescale\0"	\
 		"bootargs_hdmi=setenv bootargs ${bootargs} init=/init "	\
-			"video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24 " \
+			"video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 " \
 			"video=mxcfb1:off video=mxcfb2:off vmalloc=400M "	\
 			"androidboot.console=ttymxc0 androidboot.hardware=freescale\0"	\
 		"bootargs_dual=setenv bootargs ${bootargs} init=/init "	\
