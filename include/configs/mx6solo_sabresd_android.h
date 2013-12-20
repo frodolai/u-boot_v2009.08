@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2010-2013 Freescale Semiconductor, Inc.
+ * Copyright (C) 2012-2013 Freescale Semiconductor, Inc.
  *
- * Configuration settings for the MX6DL HDMI Dongle Freescale board.
+ * Configuration settings for the MX6SOLO SabreSD Freescale board.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -19,11 +19,11 @@
  * MA 02111-1307 USA
  */
 
-#ifndef MX6Q_SABRESD_ANDROID_H
-#define MX6Q_SABRESD_ANDROID_H
+#ifndef MX6SOLO_SABRESD_ANDROID_H
+#define MX6SOLO_SABRESD_ANDROID_H
 
 #include <asm/arch/mx6.h>
-#include "mx6dl_hdmidongle.h"
+#include "mx6solo_sabresd.h"
 
 #define CONFIG_USB_DEVICE
 #define CONFIG_IMX_UDC		       1
@@ -33,15 +33,17 @@
 #define CONFIG_FASTBOOT_PRODUCT_ID     0x0d02
 #define CONFIG_FASTBOOT_BCD_DEVICE     0x311
 #define CONFIG_FASTBOOT_MANUFACTURER_STR  "Freescale"
-#define CONFIG_FASTBOOT_PRODUCT_NAME_STR "i.mx6dl HDMI Dongle"
+#define CONFIG_FASTBOOT_PRODUCT_NAME_STR "i.mx6solo Sabre SmartDevice"
 #define CONFIG_FASTBOOT_INTERFACE_STR	 "Android fastboot"
 #define CONFIG_FASTBOOT_CONFIGURATION_STR  "Android fastboot"
 #define CONFIG_FASTBOOT_SERIAL_NUM	"12345"
 #define CONFIG_FASTBOOT_SATA_NO		 0
+
 /*  For system.img growing up more than 256MB, more buffer needs
 *   to receive the system.img*/
 #define CONFIG_FASTBOOT_TRANSFER_BUF	0x2c000000
 #define CONFIG_FASTBOOT_TRANSFER_BUF_SIZE 0x20000000 /* 512M byte */
+
 
 #define CONFIG_CMD_BOOTI
 #define CONFIG_ANDROID_RECOVERY
@@ -56,7 +58,7 @@
 
 #define CONFIG_ANDROID_RECOVERY_BOOTARGS_MMC NULL
 #define CONFIG_ANDROID_RECOVERY_BOOTCMD_MMC  \
-	"booti mmc2 recovery"
+	"booti mmc3 recovery"
 #define CONFIG_ANDROID_RECOVERY_CMD_FILE "/recovery/command"
 #define CONFIG_INITRD_TAG
 
@@ -72,6 +74,13 @@
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
 		"ethprime=FEC0\0"					\
-		"fastboot_dev=mmc2\0"					\
-		"bootcmd=booti mmc2\0"
+		"fastboot_dev=mmc3\0"					\
+		"bootcmd=booti mmc3\0"					\
+		"bootargs=console=ttymxc0,115200 init=/init nosmp "	\
+		"video=mxcfb0:dev=ldb,bpp=32 video=mxcfb1:off video=mxcfb2:off gpumem=96M "	\
+		"fbmem=10M fb0base=0x17b00000 vmalloc=400M androidboot.console=ttymxc0 "	\
+		"androidboot.hardware=freescale\0"			\
+		"splashimage=0x1D000000\0"				\
+		"splashpos=m,m\0"					\
+		"lvds_num=1\0"
 #endif
