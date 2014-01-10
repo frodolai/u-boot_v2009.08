@@ -68,7 +68,9 @@ int env_init(void)
 #else
 	mmc_env_devno = CONFIG_SYS_MMC_ENV_DEV;
 #endif
-
+#ifdef CONFIG_MX6_AR6MX
+	mmc_env_devno = mmc_env_devno - 2;
+#endif
 	return 0;
 }
 

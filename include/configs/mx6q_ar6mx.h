@@ -28,7 +28,7 @@
 #define CONFIG_ARMV7	/* This is armv7 Cortex-A9 CPU core */
 #define CONFIG_MXC
 #define CONFIG_MX6Q
-#define CONFIG_MX6Q_AR6MX
+#define CONFIG_MX6_AR6MX
 #define CONFIG_FLASH_HEADER
 #define CONFIG_FLASH_HEADER_OFFSET 0x400
 #define CONFIG_MX6_CLK32	   32768
@@ -311,10 +311,10 @@
 	#define CONFIG_SYS_NO_FLASH
 #endif
 /* Monitor at beginning of flash */
-/* #define CONFIG_FSL_ENV_IN_MMC */
+#define CONFIG_FSL_ENV_IN_MMC
 /* #define CONFIG_FSL_ENV_IN_NAND */
 /* #define CONFIG_FSL_ENV_IN_SATA */
-#define CONFIG_FSL_ENV_IN_SF
+/* #define CONFIG_FSL_ENV_IN_SF */
 
 #define CONFIG_ENV_SECT_SIZE    (8 * 1024)
 #define CONFIG_ENV_SIZE         CONFIG_ENV_SECT_SIZE
