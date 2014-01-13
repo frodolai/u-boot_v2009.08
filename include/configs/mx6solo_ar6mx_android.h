@@ -79,7 +79,7 @@
 		"bootargs=console=ttymxc0,115200\0"	\
 		"bootargs_base=setenv bootargs console=ttymxc0,115200\0"\
 		"bootargs_ldb=setenv bootargs ${bootargs} init=/init nosmp "	\
-			"video=mxcfb0:dev=ldb,1024x600M@60,if=RGB666 " \
+			"video=mxcfb0:dev=ldb,1024x600M@60,if=RGB666,bpp=32 " \
 			"video=mxcfb1:off video=mxcfb2:off vmalloc=400M "	\
 			"androidboot.console=ttymxc0 androidboot.hardware=freescale\0"	\
 		"bootargs_hdmi=setenv bootargs ${bootargs} init=/init nosmp "	\

@@ -23,7 +23,7 @@
 #define MX6SOLO_SABREAUTO_ANDROID_H
 
 #include <asm/arch/mx6.h>
-#include "mx6q_ar6mx.h"
+#include "mx6solo_ar6mx.h"
 
 #define CONFIG_USB_DEVICE
 #define CONFIG_IMX_UDC		       1
@@ -75,18 +75,18 @@
 		"netdev=eth0\0"						\
 		"ethprime=FEC0\0"					\
 		"fastboot_dev=mmc0\0"					\
-		"bootcmd=run bootargs_hdmi;booti mmc0\0"					\
+		"bootcmd=run bootargs_hdmi;booti mmc1\0"					\
 		"bootargs=console=ttymxc0,115200\0"	\
 		"bootargs_base=setenv bootargs console=ttymxc0,115200\0"\
-		"bootargs_ldb=setenv bootargs ${bootargs} init=/init "	\
-			"video=mxcfb0:dev=ldb,1024x600M@60,if=RGB666,bpp=32 " \
+		"bootargs_ldb=setenv bootargs ${bootargs} init=/init nosmp emmc_en "	\
+			"video=mxcfb0:dev=ldb,1024x600M@60,if=RGB666 " \
 			"video=mxcfb1:off video=mxcfb2:off vmalloc=400M "	\
 			"androidboot.console=ttymxc0 androidboot.hardware=freescale\0"	\
-		"bootargs_hdmi=setenv bootargs ${bootargs} init=/init "	\
+		"bootargs_hdmi=setenv bootargs ${bootargs} init=/init nosmp emmc_en "	\
 			"video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 " \
 			"video=mxcfb1:off video=mxcfb2:off vmalloc=400M "	\
 			"androidboot.console=ttymxc0 androidboot.hardware=freescale\0"	\
-		"bootargs_dual=setenv bootargs ${bootargs} init=/init "	\
+		"bootargs_dual=setenv bootargs ${bootargs} init=/init nosmp emmc_en"	\
 			"video=mxcfb0:dev=ldb,1024x600M@60,bpp=32 " \
 			"video=mxcfb1:dev=hdmi,1920x1080M@60,bpp=32 " \
 			"video=mxcfb2:off vmalloc=400M "	\
