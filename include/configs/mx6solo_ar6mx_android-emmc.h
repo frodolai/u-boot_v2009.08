@@ -74,7 +74,7 @@
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
 		"ethprime=FEC0\0"					\
-		"fastboot_dev=mmc0\0"					\
+		"fastboot_dev=mmc1\0"					\
 		"bootcmd=run bootargs_hdmi;booti mmc1\0"					\
 		"bootargs=console=ttymxc0,115200\0"	\
 		"bootargs_base=setenv bootargs console=ttymxc0,115200\0"\
