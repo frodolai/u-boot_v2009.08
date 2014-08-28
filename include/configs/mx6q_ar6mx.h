@@ -135,7 +135,7 @@
 		"bootargs_hdmi=setenv bootargs ${bootargs} root=/dev/mmcblk0p1 "	\
 		"rootwait rw video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24 enable_wait_mode=off\0"		\
 		"bootargs_ldb=setenv bootargs ${bootargs} root=/dev/mmcblk0p1 "	\
-		"rootwait rw video=mxcfb0:dev=ldb,1024x600M@60,if=RGB666 enable_wait_mode=off\0"		\
+		"rootwait rw video=mxcfb0:dev=ldb,1024x600M@60,if=RGB666,bpp=32 enable_wait_mode=off\0"		\
 		"bootcmd_hdmi=run bootargs_base bootargs_hdmi;mmc dev 0;mmc read ${loadaddr} 0x800 0x2000;bootm\0"                             \
 		"bootcmd_ldb=run bootargs_base bootargs_ldb;mmc dev 0;mmc read ${loadaddr} 0x800 0x2000;bootm\0"                             \
 		"bootcmd=run bootcmd_hdmi\0"
