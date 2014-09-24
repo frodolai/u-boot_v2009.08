@@ -3395,7 +3395,9 @@ mx6q_ar6mx-emmc_config         \
 mx6q_ar6mx_mfg_config         \
 mx6q_ar6mx_android_config \
 mx6q_ar6mx_android-emmc_config \
+mx6dl_ar6mx_config         \
 mx6dl_ar6mx-emmc_config         \
+mx6dl_ar6mx_android_config         \
 mx6dl_ar6mx_android-emmc_config         \
 mx6dl_ar6mx_mfg_config         \
 mx6solo_ar6mx_config         \
