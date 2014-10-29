@@ -123,6 +123,20 @@ found:
 		break;
 	}
 #endif
+#ifdef CONFIG_BOARD_VER_GPIO
+	{
+		u32 reg;
+
+		reg = readl(GPIO4_BASE_ADDR + GPIO_GDIR);
+		reg &= ~(0xF << 25);
+		writel(reg, GPIO4_BASE_ADDR + GPIO_GDIR);
+		reg = readl(GPIO4_BASE_ADDR + GPIO_DR);
+		reg = (reg >> 17) & 0xF00;
+
+		fsl_system_rev &= ~0xF00;
+		fsl_system_rev |= reg;
+	}
+#endif
 }
 
 int cpu_is_mx6q()

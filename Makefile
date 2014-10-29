@@ -3409,6 +3409,23 @@ mx6sl_evk_iram_config	: unconfig
 		}
 	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 mx6sl_evk freescale mx6
 
+mx6q_ar6mx_config        \
+mx6q_ar6mx_android_config \
+mx6solo_ar6mx_config        \
+mx6solo_ar6mx_mfg_config        \
+mx6solo_ar6mx_android_config	: unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 mx6q_ar6mx freescale mx6
+
+mx6solo_im300b_config        \
+mx6solo_im300b_mfg_config        \
+mx6solo_im300b_android_config	: unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 mx6q_im300b freescale mx6
+
+mx6solo_ar6mxcs_config        \
+mx6solo_ar6mxcs_mfg_config        \
+mx6solo_ar6mxcs_android_config	: unconfig
+	@$(MKCONFIG) $(@:_config=) arm arm_cortexa8 mx6q_ar6mxcs freescale mx6
+
 omap2420h4_config	: unconfig
 	@$(MKCONFIG) $(@:_config=) arm arm1136 omap2420h4 NULL omap24xx
 
