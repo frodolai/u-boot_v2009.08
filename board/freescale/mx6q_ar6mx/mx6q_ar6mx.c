@@ -1153,9 +1153,9 @@ int check_recovery_cmd_file(void)
 	int button_pressed = 0;
 	int recovery_mode = 0;
 
-  #if 0
 	recovery_mode = check_and_clean_recovery_flag();
 
+  #if 0
 	/* Check Recovery Combo Button press or not. */
 	mxc_iomux_v3_setup_pad(MX6X_IOMUX(PAD_GPIO_5__GPIO_1_5));
 
@@ -1165,9 +1165,9 @@ int check_recovery_cmd_file(void)
 		button_pressed = 1;
 		printf("Recovery key pressed\n");
 	}
+	#endif
 
 	return recovery_mode || button_pressed;
-	#endif
 }
 #endif
 //oliver}+
@@ -1235,7 +1235,7 @@ int mx6_rgmii_rework(char *devname, int phy_addr)
 		phy_write(devname, phy_addr, 0x1e, val);
 	}
 #endif  //+oliver
-	/* RX Data Pad Skew Register */ 
+	/* RX Data Pad Skew Register */
 	phy_write(devname, phy_addr, 0xd, 0x0002);
 	phy_write(devname, phy_addr, 0xe, 0x0005);
 	phy_write(devname, phy_addr, 0xd, 0xc002);

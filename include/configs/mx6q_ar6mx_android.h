@@ -58,7 +58,7 @@
 
 #define CONFIG_ANDROID_RECOVERY_BOOTARGS_MMC NULL
 #define CONFIG_ANDROID_RECOVERY_BOOTCMD_MMC  \
-	"booti mmc1 recovery"
+	"run bootargs_hdmi; booti mmc0 recovery"
 #define CONFIG_ANDROID_RECOVERY_CMD_FILE "/recovery/command"
 #define CONFIG_INITRD_TAG
 
