@@ -127,7 +127,7 @@
 	"bootargs_ldb=setenv bootargs ${bootargs} video=mxcfb0:dev=ldb,LDB-LQ070K1,if=RGB24,bpp=32\0"						\
 	"bootcmd_hdmi=run bootargs_base bootargs_hdmi;mmc dev 1;mmc read ${loadaddr} 0x800 0x2000;bootm\0" \
 	"bootcmd_ldb=run bootargs_base bootargs_ldb;mmc dev 1;mmc read ${loadaddr} 0x800 0x2000;bootm\0" \
-	"bootcmd=run bootcmd_ldb\0"
+	"bootcmd=run bootcmd_hdmi\0"
 
 
 #define CONFIG_ARP_TIMEOUT		200UL
