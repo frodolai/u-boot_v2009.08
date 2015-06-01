@@ -58,7 +58,7 @@
 
 #define CONFIG_ANDROID_RECOVERY_BOOTARGS_MMC NULL
 #define CONFIG_ANDROID_RECOVERY_BOOTCMD_MMC  \
-	"booti mmc1 recovery"
+	"booti mmc0 recovery"
 #define CONFIG_ANDROID_RECOVERY_CMD_FILE "/recovery/command"
 #define CONFIG_INITRD_TAG
 
@@ -74,8 +74,8 @@
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
 		"netdev=eth0\0"						\
 		"ethprime=FEC0\0"					\
-		"fastboot_dev=mmc1\0"					\
-		"bootcmd=booti mmc1\0"					\
+		"fastboot_dev=mmc0\0"					\
+		"bootcmd=booti mmc0\0"					\
 		"bootargs=console=ttymxc3,115200 init=/init nosmp "	\
 			"video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 "	\
 			"video=mxcfb1:off video=mxcfb2:off "	\
